@@ -35,7 +35,8 @@ class User < ApplicationRecord
   end
 
   def validate_username_length
-    username.length >= 5
+    return if username.length >= 5
+    errors.add(:username, 'Must at least have five characters.')
   end
 
   def reset_password
