@@ -1,7 +1,7 @@
 FROM ruby:2.6.4-alpine3.10
 
 RUN apk update
-RUN apk add --no-cache bash nodejs postgresql
+RUN apk add --no-cache bash nodejs postgresql firefox-esr
 RUN mkdir /app
 
 WORKDIR /app

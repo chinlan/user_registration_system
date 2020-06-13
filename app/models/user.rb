@@ -3,6 +3,7 @@ class User < ApplicationRecord
   validates :password, presence: true, confirmation: { case_sensitive: true }, length: { minimum: 8 }
 
   before_save :assign_username, if: -> { username.blank? }
+  after_create :send_welcome_mail
 
   def assign_username
     self.username = email.match(/(.+)@/)[1]
@@ -10,5 +11,9 @@ class User < ApplicationRecord
 
   def authenticate(given_password)
     given_password == password
+  end
+
+  def send_welcome_mail
+    UserMailer.welcome_email(self).deliver!
   end
 end
