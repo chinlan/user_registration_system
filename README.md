@@ -1,24 +1,20 @@
-# README
+# Get start
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- `git clone git@github.com:chinlan/user_registration_system.git`
+- `cd user_registration_system`
+- Copy the `.env.sample` file content to `.env` (Since this is a demo project, I put all the info into sample file for convenience)
+- `docker-compose build`
+- `docker-compose up`
+- Open a new terminal window, and run `docker-compose exec app bash`
+- When entering bash, run `bundle exec rails db:setup`
+- Open `localhost:3000` in the browser
 
-Things you may want to cover:
+# Run test suite
+- `docker-compose exec app bash`
+- When entering bash, run `bundle exec rspec`
 
-* Ruby version
+# Preview the mail
+- Visit `localhost:3000/rails/mailers`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# View mail sent in the development environment
+- /tmp/letter_opener/*
