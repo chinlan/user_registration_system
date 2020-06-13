@@ -1,10 +1,17 @@
 <h1>Profile</h1>
-<dl>
-  <dt>Personal info</dt>
-  <dd>username</dd>
-  <dt><%= @user.username %></dt>
-  <dd>email</dd>
-  <dt><%= @user.email %></dt>
-  <dd>password</dd>
-  <dt><%= @user.password %></dt>
-</dl>
+<% if @user == current_user %>
+  <%= button_to 'Edit', edit_user_path(@user), method: :get %>
+<% end %>
+
+<div class='profile-content'>
+  <dl>
+    <dt>username</dt>
+    <dd><%= @user.username %></dd>
+
+    <dt>email</dt>
+    <dd><%= @user.email %></dd>
+
+    <dt>password</dt>
+    <dd><%= @user.password %></dd>
+  </dl>
+</div>
