@@ -2,7 +2,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, confirmation: { case_sensitive: true }, length: { minimum: 8 }
   validate on: :update do
-    validate_username_length unless reset_password?
+    validate_username_length if edit_username?
   end
 
   before_save :assign_username, if: -> { username.blank? }
@@ -39,7 +39,7 @@ class User < ApplicationRecord
     errors.add(:username, 'Must at least have five characters.')
   end
 
-  def reset_password?
-    reset_password_token_changed?
+  def edit_username?
+    username_changed?
   end
 end

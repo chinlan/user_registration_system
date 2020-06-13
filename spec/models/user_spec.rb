@@ -59,26 +59,58 @@ RSpec.describe User, type: :model do
   describe '.validate_username_length' do
     let(:user) { create(:user, username: 'xxx') }
 
-    context 'when reset_password?' do
+    context 'when edit_username?' do
       it 'does not check the username length' do
         expect(user).not_to receive(:validate_username_length)
-        user.generate_password_token!
+        user.update(password: 'new_password')
       end
     end
 
-    context 'when not reset_password?' do
+    context 'when not edit_username?' do
       it 'checks the username length' do
         expect(user).to receive(:validate_username_length).once
-        user.update!(password: 'new_password')
+        user.update!(username: 'new_username')
       end
     end
   end
 
-  describe '.reset_password?' do
-    it 'checks if reset_password_token is changed' do
+  describe '.edit_username?' do
+    it 'checks if username is changed' do
       user = create(:user)
-      user.reset_password_token = 'xxxxxx'
-      expect(user.reset_password?).to eq(true)
+      user.username = 'xxxxxxx'
+      expect(user.edit_username?).to eq(true)
+    end
+  end
+
+  describe 'validate password length' do
+    context 'when length is less than 8' do
+      it 'is invalid' do
+        user = build(:user, password: 'ppp', email: 'test@example.com')
+        expect(user.valid?).to eq(false)
+      end
+    end
+
+    context 'when length is more or equal to 8' do
+      it 'is valid' do
+        user = build(:user, password: 'password', email: 'test@example.com')
+        expect(user.valid?).to eq(true)
+      end
+    end
+  end
+
+  describe 'validate email format' do
+    context 'when format is wrong' do
+      it 'is invalid' do
+        user = build(:user, password: 'ppp', email: 'testexamplecom')
+        expect(user.valid?).to eq(false)
+      end
+    end
+
+    context 'when length is more or equal to 8' do
+      it 'is valid' do
+        user = build(:user, password: 'password', email: 'test@example.com')
+        expect(user.valid?).to eq(true)
+      end
     end
   end
 end
