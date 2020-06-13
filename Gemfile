@@ -37,6 +37,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'pry-rails'
+  gem 'rails-controller-testing'
 end
 
 group :development do
